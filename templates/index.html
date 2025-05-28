@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>YouTube Downloader</h1>
+  <input type="text" id="url" placeholder="Enter YouTube URL">
+  <label><input type="checkbox" id="mp3"> Download as MP3</label>
+  <button onclick="startDownload()">Download</button>
+  <p id="status"></p>
+
+  <script>
+    async function startDownload() {
+      const url = document.getElementById("url").value;
+      const mp3 = document.getElementById("mp3").checked;
+      document.getElementById("status").innerText = "Downloading...";
+
+      const res = await fetch("/download", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, mp3 })
+      });
+
+      const data = await res.json();
+      document.getElementById("status").innerText = data.message || data.error;
+    }
+  </script>
+</body>
+</html>
