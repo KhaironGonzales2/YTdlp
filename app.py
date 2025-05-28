@@ -20,7 +20,8 @@ def download_video():
 
     with tempfile.TemporaryDirectory() as temp_dir:
         output_path = os.path.join(temp_dir, "%(title)s.%(ext)s")
-        cmd = ["yt-dlp", url, "-o", output_path]
+        cmd = ["yt-dlp", url, "-o", output_path, "--cookies", "cookies.txt"]
+
         if as_mp3:
             cmd += ["-x", "--audio-format", "mp3"]
 
